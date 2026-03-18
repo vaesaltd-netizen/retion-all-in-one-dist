@@ -1,20 +1,20 @@
 /**
- * Retion CRM Extension - Light Mode Theme (Purple Accent)
- * Adapted from Pancake CRM with Retion branding
+ * Retion CRM Extension - Light Mode Theme (SaaS Purple)
+ * Design: Clean, professional, eye-friendly for long work sessions
  */
 
-/* Color Variables */
+/* Color Variables - Light Mode SaaS */
 :root {
   --rcrm-bg-primary: #FFFFFF;
   --rcrm-bg-secondary: #F8FAFC;
   --rcrm-bg-input: #FFFFFF;
   --rcrm-border: #E2E8F0;
-  --rcrm-border-focus: #7C3AED;
+  --rcrm-border-focus: #2563EB;
   --rcrm-text-primary: #1E293B;
   --rcrm-text-secondary: #475569;
   --rcrm-text-muted: #94A3B8;
-  --rcrm-accent: #7C3AED;
-  --rcrm-accent-light: #8B5CF6;
+  --rcrm-accent: #2563EB;
+  --rcrm-accent-light: #3B82F6;
   --rcrm-cta: #F97316;
   --rcrm-cta-light: #FB923C;
   --rcrm-success: #10B981;
@@ -22,7 +22,7 @@
   --rcrm-shadow: rgba(0, 0, 0, 0.08);
 }
 
-/* Floating Button - Purple Gradient */
+/* Floating Button - Purple Gradient (matches header) */
 #retion-crm-btn {
   position: fixed;
   top: 12px;
@@ -58,21 +58,23 @@
   opacity: 0.9;
 }
 
-/* Popup Container */
+/* Popup Container - Right Sidebar Dock */
 #retion-crm-popup {
   position: fixed;
-  width: 340px;
-  max-width: calc(100vw - 24px);
-  max-height: calc(100vh - 24px);
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
   padding: 0;
   background: var(--rcrm-bg-primary);
   border: none;
-  border-radius: 16px;
-  box-shadow: 0 20px 50px var(--rcrm-shadow), 0 0 0 1px var(--rcrm-border);
+  border-left: 1px solid var(--rcrm-border);
+  border-radius: 0;
+  box-shadow: -4px 0 20px var(--rcrm-shadow);
   z-index: 999999;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   display: none;
-  transform-origin: top right;
+  transform-origin: right center;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -84,37 +86,90 @@
 
 #retion-crm-popup.show {
   display: flex;
-  animation: rcrmPopupOpen 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: rcrmSlideIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 #retion-crm-popup.closing {
   display: flex;
-  animation: rcrmPopupClose 0.25s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  animation: rcrmSlideOut 0.25s cubic-bezier(0.55, 0, 1, 0.45) forwards;
 }
 
-@keyframes rcrmPopupOpen {
-  0% { opacity: 0; transform: scale(0.2); }
-  60% { opacity: 1; transform: scale(1.03); }
-  100% { opacity: 1; transform: scale(1); }
+/* Open: slide in from right */
+@keyframes rcrmSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-@keyframes rcrmPopupClose {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.2); }
+/* Close: slide out to right */
+@keyframes rcrmSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 }
 
-/* Header - Purple Gradient */
+/* Header - Purple Gradient (matches logo) */
 .rcrm-header {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 16px 20px;
   background: linear-gradient(135deg, #A78BFA 0%, #7C3AED 100%);
-  border-radius: 16px 16px 0 0;
+  border-radius: 0;
   color: white;
   flex-shrink: 0;
 }
 
+/* Tabs */
+.rcrm-tabs {
+  display: flex;
+  background: var(--rcrm-bg-secondary);
+  border-bottom: 1px solid var(--rcrm-border);
+  flex-shrink: 0;
+}
+
+.rcrm-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--rcrm-text-muted);
+  cursor: pointer;
+  transition: color 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+
+.rcrm-tab:hover {
+  color: var(--rcrm-text-secondary);
+}
+
+.rcrm-tab.active {
+  color: var(--rcrm-accent);
+  box-shadow: inset 0 -2px 0 var(--rcrm-accent);
+}
+
+/* Page switching */
+.rcrm-page {
+  display: none;
+}
+
+.rcrm-page.active {
+  display: block;
+}
+
+/* Content area - scrollable when needed */
 .rcrm-content {
   padding: 20px;
   flex: 1;
@@ -177,16 +232,23 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* Section Dividers for visual grouping */
+.rcrm-section {
+  margin-bottom: 16px;
+}
+
 /* Fields */
 .rcrm-field {
   margin-bottom: 12px;
 }
 
+/* Field with open link button */
 .rcrm-field-link {
   position: relative;
   padding-bottom: 16px;
 }
 
+/* Open link button - tiny, below input on right */
 .rcrm-open {
   position: absolute;
   right: 0;
@@ -236,7 +298,7 @@
 .rcrm-field input:focus {
   outline: none;
   border-color: var(--rcrm-accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .rcrm-field input[readonly] {
@@ -266,7 +328,7 @@
 .rcrm-field select:focus {
   outline: none;
   border-color: var(--rcrm-accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 /* Searchable Dropdown */
@@ -351,9 +413,17 @@
   background: var(--rcrm-bg-secondary);
 }
 
-.rcrm-dropdown-item:first-child { border-radius: 7px 7px 0 0; }
-.rcrm-dropdown-item:last-child { border-radius: 0 0 7px 7px; }
-.rcrm-dropdown-item:only-child { border-radius: 7px; }
+.rcrm-dropdown-item:first-child {
+  border-radius: 7px 7px 0 0;
+}
+
+.rcrm-dropdown-item:last-child {
+  border-radius: 0 0 7px 7px;
+}
+
+.rcrm-dropdown-item:only-child {
+  border-radius: 7px;
+}
 
 .rcrm-dropdown-empty {
   padding: 10px 12px;
@@ -375,7 +445,9 @@
   gap: 8px;
 }
 
-.rcrm-status.show { display: flex; }
+.rcrm-status.show {
+  display: flex;
+}
 
 .rcrm-status svg {
   width: 18px;
@@ -394,13 +466,14 @@
 }
 
 .rcrm-status.loading {
-  background: rgba(124, 58, 237, 0.1);
+  background: rgba(37, 99, 235, 0.1);
   color: var(--rcrm-accent);
 }
 
 /* Action Buttons */
 .rcrm-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 8px;
 }
@@ -432,8 +505,66 @@
 }
 
 .rcrm-btn-scan:hover {
-  background: rgba(124, 58, 237, 0.08);
+  background: rgba(37, 99, 235, 0.08);
   border-color: var(--rcrm-accent);
+}
+
+.rcrm-btn-manual {
+  background: var(--rcrm-bg-secondary);
+  color: #7c3aed;
+  border: 1px solid #c4b5fd;
+}
+
+.rcrm-btn-manual:hover {
+  background: rgba(124, 58, 237, 0.08);
+  border-color: #7c3aed;
+}
+
+/* Manual icon next to label */
+.rcrm-field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.rcrm-field-label-row label {
+  margin-bottom: 0;
+}
+
+.rcrm-manual-icon {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--rcrm-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.rcrm-manual-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+.rcrm-manual-icon:hover {
+  color: #0369A1;
+}
+
+.rcrm-manual-icon.rcrm-btn-manual-active {
+  color: #0369A1;
+  filter: drop-shadow(0 0 3px rgba(3, 105, 161, 0.6));
+}
+
+/* Hide note dropdown toggle by default, show only in manual mode with VAS code */
+.rcrm-note-toggle-hidden {
+  display: none !important;
 }
 
 .rcrm-btn-send {
@@ -476,68 +607,389 @@
 /* Focus states */
 #retion-crm-popup .rcrm-close:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .rcrm-btn:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .rcrm-btn-send:focus {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25), 0 0 0 3px rgba(249, 115, 22, 0.15);
 }
 
-/* Scrollbar */
-#retion-crm-popup ::-webkit-scrollbar { width: 6px; }
-#retion-crm-popup ::-webkit-scrollbar-track { background: var(--rcrm-bg-secondary); border-radius: 3px; }
-#retion-crm-popup ::-webkit-scrollbar-thumb { background: var(--rcrm-border); border-radius: 3px; }
-#retion-crm-popup ::-webkit-scrollbar-thumb:hover { background: var(--rcrm-text-muted); }
+/* Field hint (below input) */
+.rcrm-field-hint {
+  display: block;
+  font-size: 11px;
+  color: var(--rcrm-accent);
+  margin-top: 4px;
+  font-weight: 600;
+}
 
-/* Responsive - Small screens */
+/* Section Title (Order page) */
+.rcrm-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rcrm-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 16px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rcrm-border);
+}
+
+/* Order Line */
+.rcrm-order-line {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.rcrm-product-search-wrap {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+
+.rcrm-product-search-wrap input.rcrm-product-search {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rcrm-border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--rcrm-text-primary);
+  background: var(--rcrm-bg-input);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.rcrm-product-search-wrap input.rcrm-product-search:focus {
+  border-color: var(--rcrm-accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.rcrm-product-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--rcrm-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  z-index: 10001;
+  margin-top: 2px;
+}
+
+.rcrm-product-option {
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--rcrm-text-primary);
+}
+
+.rcrm-product-option:hover {
+  background: var(--rcrm-bg-secondary);
+}
+
+.rcrm-product-no-result {
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--rcrm-text-secondary);
+  text-align: center;
+}
+
+.rcrm-order-line input.rcrm-line-qty {
+  width: 52px;
+  padding: 8px 6px;
+  border: 1px solid var(--rcrm-border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--rcrm-text-primary);
+  background: var(--rcrm-bg-input);
+  box-sizing: border-box;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.rcrm-order-line .rcrm-line-remove {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--rcrm-error);
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.rcrm-order-line .rcrm-line-remove:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Add product line button */
+.rcrm-btn-add-line {
+  width: 100%;
+  padding: 8px;
+  border: 1px dashed var(--rcrm-border);
+  border-radius: 8px;
+  background: none;
+  color: var(--rcrm-accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.rcrm-btn-add-line:hover {
+  background: rgba(37, 99, 235, 0.05);
+  border-color: var(--rcrm-accent);
+}
+
+/* Scrollbar */
+#retion-crm-popup ::-webkit-scrollbar {
+  width: 6px;
+}
+
+#retion-crm-popup ::-webkit-scrollbar-track {
+  background: var(--rcrm-bg-secondary);
+  border-radius: 3px;
+}
+
+#retion-crm-popup ::-webkit-scrollbar-thumb {
+  background: var(--rcrm-border);
+  border-radius: 3px;
+}
+
+#retion-crm-popup ::-webkit-scrollbar-thumb:hover {
+  background: var(--rcrm-text-muted);
+}
+
+/* Responsive - Small screens (compact mode) */
 @media (max-height: 700px) {
-  #retion-crm-popup { width: 300px; }
-  .rcrm-header { padding: 12px 16px; gap: 10px; }
-  .rcrm-header h2 { font-size: 15px; }
-  .rcrm-subtitle { font-size: 11px; }
-  .rcrm-logo svg { width: 32px; height: 32px; }
-  .rcrm-content { padding: 14px; }
-  .rcrm-field { margin-bottom: 8px; }
-  .rcrm-field label { font-size: 11px; margin-bottom: 4px; }
-  .rcrm-field input, .rcrm-field select { padding: 7px 10px; font-size: 13px; }
-  .rcrm-field-link { padding-bottom: 12px; }
-  .rcrm-dropdown { max-height: 160px; }
-  .rcrm-dropdown-item { padding: 8px 10px; font-size: 13px; }
-  .rcrm-status { padding: 8px 10px; font-size: 12px; margin-bottom: 8px; }
-  .rcrm-actions { gap: 8px; margin-top: 6px; }
-  .rcrm-btn { padding: 10px 12px; font-size: 13px; border-radius: 8px; }
-  .rcrm-btn svg { width: 16px; height: 16px; }
-  #retion-crm-popup .rcrm-close { width: 24px; height: 24px; font-size: 16px; top: 10px; right: 10px; }
+  #retion-crm-popup {
+    width: 290px;
+  }
+
+  .rcrm-header {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .rcrm-header h2 {
+    font-size: 15px;
+  }
+
+  .rcrm-subtitle {
+    font-size: 11px;
+  }
+
+  .rcrm-logo svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rcrm-tabs {
+    padding: 0;
+  }
+
+  .rcrm-tab {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .rcrm-content {
+    padding: 14px;
+  }
+
+  .rcrm-field {
+    margin-bottom: 8px;
+  }
+
+  .rcrm-field label {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  .rcrm-field input,
+  .rcrm-field select {
+    padding: 7px 10px;
+    font-size: 13px;
+  }
+
+  .rcrm-field-link {
+    padding-bottom: 12px;
+  }
+
+  .rcrm-dropdown {
+    max-height: 160px;
+  }
+
+  .rcrm-dropdown-item {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .rcrm-status {
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .rcrm-actions {
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .rcrm-btn {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  .rcrm-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #retion-crm-popup .rcrm-close {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .rcrm-section-title {
+    margin: 10px 0 8px;
+    font-size: 11px;
+  }
+
+  .rcrm-product-search-wrap input.rcrm-product-search,
+  .rcrm-order-line input.rcrm-line-qty {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .rcrm-order-line input.rcrm-line-qty {
+    width: 44px;
+  }
+
+  .rcrm-btn-add-line {
+    padding: 6px;
+    font-size: 12px;
+  }
 }
 
 /* Extra small screens */
 @media (max-height: 580px) {
-  #retion-crm-popup { width: 280px; }
-  .rcrm-header { padding: 10px 14px; }
-  .rcrm-header h2 { font-size: 14px; }
-  .rcrm-logo svg { width: 28px; height: 28px; }
-  .rcrm-content { padding: 12px; }
-  .rcrm-field { margin-bottom: 6px; }
-  .rcrm-field label { font-size: 10px; margin-bottom: 3px; }
-  .rcrm-field input, .rcrm-field select { padding: 6px 8px; font-size: 12px; border-radius: 6px; }
-  .rcrm-field-link { padding-bottom: 10px; }
-  .rcrm-dropdown { max-height: 120px; }
-  .rcrm-dropdown-item { padding: 6px 8px; font-size: 12px; }
-  .rcrm-btn { padding: 8px 10px; font-size: 12px; }
+  #retion-crm-popup {
+    width: 270px;
+  }
+
+  .rcrm-header {
+    padding: 10px 14px;
+  }
+
+  .rcrm-header h2 {
+    font-size: 14px;
+  }
+
+  .rcrm-logo svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .rcrm-tab {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .rcrm-content {
+    padding: 12px;
+  }
+
+  .rcrm-field {
+    margin-bottom: 6px;
+  }
+
+  .rcrm-field label {
+    font-size: 10px;
+    margin-bottom: 3px;
+  }
+
+  .rcrm-field input,
+  .rcrm-field select {
+    padding: 6px 8px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  .rcrm-field-link {
+    padding-bottom: 10px;
+  }
+
+  .rcrm-dropdown {
+    max-height: 120px;
+  }
+
+  .rcrm-dropdown-item {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .rcrm-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .rcrm-order-line {
+    gap: 4px;
+  }
+
+  .rcrm-product-search-wrap input.rcrm-product-search,
+  .rcrm-order-line input.rcrm-line-qty {
+    padding: 5px 6px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  .rcrm-order-line input.rcrm-line-qty {
+    width: 40px;
+  }
+
+  .rcrm-order-line .rcrm-line-remove {
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  #retion-crm-btn, #retion-crm-popup, .rcrm-btn, .rcrm-field input, .rcrm-field select, .rcrm-close {
+  #retion-crm-btn,
+  #retion-crm-popup,
+  .rcrm-btn,
+  .rcrm-field input,
+  .rcrm-field select,
+  .rcrm-close {
     transition: none !important;
     animation: none !important;
   }
-  #retion-crm-popup.show, #retion-crm-popup.closing {
+
+  #retion-crm-popup.show,
+  #retion-crm-popup.closing {
     animation: none !important;
   }
 }
